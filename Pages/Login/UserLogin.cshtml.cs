@@ -56,7 +56,7 @@ namespace LoL1Shot.Pages.Login
             else 
                 return false;
         }
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl)
         {
             if (ValidateUser(user))
             {

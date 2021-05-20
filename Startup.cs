@@ -35,9 +35,11 @@ namespace Projekt.NET
             });
             // dodajemy strony ktore wymagaja autoryzacji (profil uzytkownika)
 
-            //services.AddRazorPages(options => {
-            //    options.Conventions.AuthorizePage("/Profile");
-            //});
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizePage("/Login/DummyLoginPage");
+            });
+
             services.AddRazorPages();
         }
 
