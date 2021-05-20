@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,22 @@ namespace Projekt.NET
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("CookieAuthentication")
+            .AddCookie("CookieAuthentication", config =>
+            {
+                config.Cookie.HttpOnly = true;
+                config.Cookie.SecurePolicy = CookieSecurePolicy.None;
+                config.Cookie.Name = "UserLoginCookie";
+                config.LoginPath = "/Login/UserLogin";
+                config.Cookie.SameSite = SameSiteMode.Strict;
+            });
+            // dodajemy strony ktore wymagaja autoryzacji (profil uzytkownika)
+
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizePage("/Login/DummyLoginPage");
+            });
+
             services.AddRazorPages();
         }
 
@@ -44,6 +61,9 @@ namespace Projekt.NET
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
