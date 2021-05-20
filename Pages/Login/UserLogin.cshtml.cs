@@ -30,10 +30,31 @@ namespace LoL1Shot.Pages.Login
         }
         public bool ValidateUser(User user)
         {
-            SqlConnection con = new SqlConnection(_configuration.GetConnectionString("MyCompanyDB"));
+            SqlConnection con = new SqlConnection(_configuration.GetConnectionString("OneShotDB"));
             SqlCommand cmd = new SqlCommand("sp_checkLogin", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
+            if (user.userName == null) user.userName = "";
+
+            cmd.Parameters.Add("@username", SqlDbType.NChar, 50).Value = user.userName;
+
+            if (user.password == null) user.password = "";
+
+            SqlParameter hashedpassword = new SqlParameter("@password", SqlDbType.NChar, 100);
+            hashedpassword.Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(hashedpassword);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            var passwordHasher = new PasswordHasher<string>();
+
+            if (passwordHasher.VerifyHashedPassword(null, hashedpassword.Value.ToString(), user.password) 
+                == PasswordVerificationResult.Success)
+                return true;
+            else 
+                return false;
         }
 
 
