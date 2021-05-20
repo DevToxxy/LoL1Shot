@@ -58,7 +58,17 @@ namespace LoL1Shot.Pages.Login
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-
+            if (ValidateUser(user))
+            {
+                var claims = new List<Claim>()
+                {
+                 new Claim(ClaimTypes.Name, user.userName)
+                };
+                var claimsIdentity = new ClaimsIdentity(claims, "CookieAuthentication");
+                await HttpContext.SignInAsync("CookieAuthentication", new ClaimsPrincipal(claimsIdentity));
+                return Redirect(returnUrl);
+            }
+            return Page();
         }
 
     }
