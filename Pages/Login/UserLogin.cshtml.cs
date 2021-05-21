@@ -58,6 +58,10 @@ namespace LoL1Shot.Pages.Login
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl)
         {
+            //if (!ModelState.IsValid) nie dziala i na 99% jest redundant
+            //{
+            //    return Page();
+            //}   
             if (ValidateUser(user))
             {
                 var claims = new List<Claim>()
