@@ -25,6 +25,10 @@ namespace LoL1Shot.Pages.Register
 
         public IActionResult OnPost()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("OneShotDB"));
             SqlCommand cmd = new SqlCommand("sp_createUser", con);
             cmd.CommandType = CommandType.StoredProcedure;
