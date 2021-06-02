@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Configuration files - it contains Riot API key
+appsettings.json
+appsettings.Development.json
+/zasady_zaliczenia_projektu.pdf
