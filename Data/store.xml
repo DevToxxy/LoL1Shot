@@ -1,0 +1,10 @@
+<store>
+  <product id="1">
+    <name>Narty wodne</name>
+    <price>39999.00</price>
+  </product>
+  <product id="0">
+    <name>Karty</name>
+    <price>5.49</price>
+  </product>
+</store>

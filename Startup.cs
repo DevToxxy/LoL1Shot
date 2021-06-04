@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LoL1Shot.Data_Access_Layer;
 
 namespace Projekt.NET
 {
@@ -39,6 +40,10 @@ namespace Projekt.NET
             {
                 options.Conventions.AuthorizePage("/Login/DummyLoginPage");
             });
+
+            services.Add(new ServiceDescriptor(typeof(IComboDB), new ComboSqlDB(Configuration)));
+            //korzystanie z bazy XML => new ComboXmlDB(Configuration)
+            //korzystanie z bazy SQL => new ComboSqlDB(Configuration)
 
             services.AddRazorPages();
         }
