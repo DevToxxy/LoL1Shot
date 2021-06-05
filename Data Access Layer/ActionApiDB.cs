@@ -18,6 +18,11 @@ namespace LoL1Shot.Data_Access_Layer
         private Champion ConvertFromDataDragon(
             RiotSharp.Endpoints.StaticDataEndpoint.Champion.ChampionStatic championStatic)
         {
+            Spell q = new Spell(championStatic.Spells[0].Name, SpellKey.Q);
+            Spell w = new Spell(championStatic.Spells[1].Name, SpellKey.W);
+            Spell e = new Spell(championStatic.Spells[2].Name, SpellKey.E);
+            Spell r = new Spell(championStatic.Spells[3].Name, SpellKey.R);
+
             return new Champion(
                     championStatic.Name,
                     championStatic.Id,
@@ -26,13 +31,13 @@ namespace LoL1Shot.Data_Access_Layer
                     championStatic.Stats.Armor,
                     championStatic.Stats.ArmorPerLevel,
                     championStatic.Stats.SpellBlockPerLevel,
-                    championStatic.Stats.AttackDamage,
-                    championStatic.Stats.AttackDamagePerLevel,
-                    new Models.Action(championStatic.Spells[0].Name, ActionType.Q),
-                    new Models.Action(championStatic.Spells[1].Name, ActionType.W),
-                    new Models.Action(championStatic.Spells[2].Name, ActionType.E),
-                    new Models.Action(championStatic.Spells[3].Name, ActionType.R),
-                    new Models.Action("SKĄD POBRAĆ TĘ WARTOŚĆ?", ActionType.AA)
+                    q, 
+                    w, 
+                    e, 
+                    r,
+                    new AutoAttack(
+                        championStatic.Stats.AttackDamage,
+                        championStatic.Stats.AttackDamagePerLevel)
                 );
         }
 

@@ -15,13 +15,11 @@ namespace LoL1Shot.Models
             double armor,
             double armorPerLevel,
             double spellBlockPerLevel,
-            double attackDamage,
-            double attackDamagePerLevel,
-            Action q,
-            Action w,
-            Action e,
-            Action r,
-            Action aA)
+            Spell q,
+            Spell w,
+            Spell e,
+            Spell r,
+            AutoAttack aA)
         {
             Name = name;
             Id = id;
@@ -30,8 +28,6 @@ namespace LoL1Shot.Models
             Armor = armor;
             ArmorPerLevel = armorPerLevel;
             SpellBlockPerLevel = spellBlockPerLevel;
-            AttackDamage = attackDamage;
-            AttackDamagePerLevel = attackDamagePerLevel;
             Q = q;
             W = w;
             E = e;
@@ -46,12 +42,10 @@ namespace LoL1Shot.Models
         public double Armor { get; }
         public double ArmorPerLevel { get; }
         public double SpellBlockPerLevel { get; }
-        public double AttackDamage { get; }
-        public double AttackDamagePerLevel { get; }
-        public Action Q { get; }
-        public Action W { get; }
-        public Action E { get; }
-        public Action R { get; }
-        public Action AA { get; }
+        public Spell Q { get; }
+        public Spell W { get; }
+        public Spell E { get; }
+        public Spell R { get; }
+        public AutoAttack AA { get; }
     }
 }

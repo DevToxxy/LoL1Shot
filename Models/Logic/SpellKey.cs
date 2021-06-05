@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace LoL1Shot.Models
 {
-    public enum ActionType
+    public enum SpellKey
     {
         Q,
         W,
         E,
-        R,
-        AA
+        R
     }
 }

@@ -7,15 +7,10 @@ using System.Threading.Tasks;
 
 namespace LoL1Shot.Models
 {
-    public class Action
+    public abstract class Action
     {
-        public Action(string name, ActionType actionType)
+        public Action()
         {
-            this.name = name;
-            this.actionType = actionType;
         }
-
-        public string name { get; }
-        public ActionType actionType { get; }
     }
 }
