@@ -38,11 +38,14 @@ namespace LoL1Shot.Models
 
         public Champion() { }
 
+        [Display(Name = "Nazwa championa")]
+        [Required]
         public string Name { get; set; }
 
         /// <summary>
         /// Klucz (nie to samo co numer id)
         /// </summary>
+        [Display(Name = "Klucz championa")]
         [Key]
         public string KeyName { get; set; }
         
