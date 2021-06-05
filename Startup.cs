@@ -42,6 +42,7 @@ namespace Projekt.NET
             });
 
             services.Add(new ServiceDescriptor(typeof(IComboDB), new ComboSqlDB(Configuration)));
+            services.Add(new ServiceDescriptor(typeof(IActionDB), new ActionApiDB(Configuration)));
             //korzystanie z bazy XML => new ComboXmlDB(Configuration)
             //korzystanie z bazy SQL => new ComboSqlDB(Configuration)
 

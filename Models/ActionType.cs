@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace LoL1Shot.Models
 {
-    public class Category
+    public enum ActionType
     {
-        public Category(string name)
-        {
-
-        }
+        Q,
+        W,
+        E,
+        R,
+        AA
     }
 }
