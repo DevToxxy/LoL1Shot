@@ -18,6 +18,10 @@ namespace LoL1Shot.Data_Access_Layer
         private Champion ConvertFromDataDragon(
             RiotSharp.Endpoints.StaticDataEndpoint.Champion.ChampionStatic championStatic)
         {
+            //dostęp do danych championa poprzez
+            //championStatic.Stats.MpPerLevel;
+            //championStatic.Spells[0].EffectBurns;
+
             Spell q = new Spell(championStatic.Spells[0].Name, SpellKey.Q);
             Spell w = new Spell(championStatic.Spells[1].Name, SpellKey.W);
             Spell e = new Spell(championStatic.Spells[2].Name, SpellKey.E);
@@ -47,10 +51,18 @@ namespace LoL1Shot.Data_Access_Layer
             {
                 List<Champion> champions = new List<Champion>();
 
-                foreach (var champion in 
-                    _riotApi.StaticData.Champions.GetAllAsync(_latestVersion).Result.Champions)
+                try
                 {
-                    champions.Add(ConvertFromDataDragon(champion.Value));
+                    foreach (var champion in 
+                        _riotApi.StaticData.Champions.GetAllAsync(_latestVersion).Result.Champions)
+                    {
+                        champions.Add(ConvertFromDataDragon(champion.Value));
+                    }
+                }
+                catch (RiotSharpException)
+                {
+                    throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
+                        " lub odwołanie do nieistniejącej strony URL)");
                 }
 
                 return champions;
@@ -80,7 +92,8 @@ namespace LoL1Shot.Data_Access_Layer
             }
             catch(RiotSharpException)
             {
-                
+                throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
+                    " lub odwołanie do nieistniejącej strony URL)");
             }
 
             return null;
@@ -93,9 +106,10 @@ namespace LoL1Shot.Data_Access_Layer
                 return ConvertFromDataDragon(
                     _riotApi.StaticData.Champions.GetByKeyAsync(GetChampionId(name), _latestVersion).Result);
             }
-            catch(RiotSharpException)
+            catch (RiotSharpException)
             {
-                return null;
+                throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
+                    " lub odwołanie do nieistniejącej strony URL)");
             }
         }
     }
