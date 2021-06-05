@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using LoL1Shot.Data;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Projekt.NET
 {
@@ -27,13 +29,16 @@ namespace Projekt.NET
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<ComboContext>();
+                    var context = services.GetRequiredService<DataContext>();
                     context.Database.EnsureCreated();
+
+                    var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
+                    databaseCreator.CreateTables();
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred creating the DB.");
+                    logger.LogError(ex, "An error occurred when creating the DB.");
                 }
             }
         }

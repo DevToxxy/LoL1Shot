@@ -13,5 +13,7 @@ namespace LoL1Shot.Models
         {
             SpellKey = spellKey;
         }
+
+        public Spell() : base() { }
     }
 }

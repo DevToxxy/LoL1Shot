@@ -13,6 +13,8 @@ namespace LoL1Shot.Models
             AttackDamagePerLevel = attackDamagePerLevel;
         }
 
+        public AutoAttack() : base() { }
+
         public double AttackDamage { get; }
         public double AttackDamagePerLevel { get; }
     }

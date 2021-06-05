@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace LoL1Shot.Models
     {
         public Champion(
             string name,
-            double id,
+            string keyName,
             double hPPerLevel,
             double hP,
             double armor,
@@ -22,7 +23,7 @@ namespace LoL1Shot.Models
             AutoAttack aA)
         {
             Name = name;
-            Id = id;
+            KeyName = keyName;
             HPPerLevel = hPPerLevel;
             HP = hP;
             Armor = armor;
@@ -35,10 +36,18 @@ namespace LoL1Shot.Models
             AA = aA;
         }
 
-        public string Name { get; }
-        public double Id { get; }
+        public Champion() { }
+
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Klucz (nie to samo co numer id)
+        /// </summary>
+        [Key]
+        public string KeyName { get; set; }
+        
         public double HPPerLevel { get; }
-        public double HP { get; }
+        public double HP { get;  }
         public double Armor { get; }
         public double ArmorPerLevel { get; }
         public double SpellBlockPerLevel { get; }
