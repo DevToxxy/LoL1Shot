@@ -12,6 +12,6 @@ namespace LoL1Shot.Data_Access_Layer
         public Champion GetChampionByName(string name);
         public Champion GetChampionByKey(string keyName);
         public List<Champion> GetChampions { get; }
-        public Dictionary<string, string> GetChamionsKeys { get; }
+        public Dictionary<string, string> GetChampionsKeys { get; }
     }
 }
