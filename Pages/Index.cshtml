@@ -4,7 +4,41 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h2>Lista Combo</h2>
+<div class="row col-sm-12">
+    <a asp-page="CRUD_Combo/Add" class="btn btn-primary btn-large">Dodaj</a>
 </div>
+<br />
+<br />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => Model.comboList[0].name)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => Model.comboList[0].actionsString)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => Model.comboList[0].championKey)
+            </th>
+            <th scope="col">Akcja</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.comboList)
+        {
+            <tr>
+                <th scope="row">@Html.DisplayFor(m => p.name)</th>
+                <td>@Html.DisplayFor(m => p.actionsString)</td>
+                <td>@Html.DisplayFor(m => p.championKey)</td>
+
+
+                <td>
+                    <a asp-page="CRUD_Combo/Update" asp-route-id=@p.name>Edytuj</a> |
+                    <a asp-page="CRUD_Combo/Delete" asp-route-id=@p.name>Kasuj</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

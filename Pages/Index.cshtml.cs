@@ -17,16 +17,22 @@ namespace Projekt.NET.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IConfiguration _configuration;
         private IActionDB _actionDB;
+        IComboDB comboDB;
+        public List<Combo> comboList = new List<Combo>();
 
-        public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration, IActionDB actionDB)
+        public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration, IActionDB actionDB,IComboDB _comboDB)
         {
             _logger = logger;
             _configuration = configuration;
             _actionDB = actionDB;
+            comboDB = _comboDB;
+
         }
 
         public void OnGet()
         {
+            comboList = comboDB.List;
+
         }
     }
 }

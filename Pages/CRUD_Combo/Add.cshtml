@@ -2,3 +2,44 @@
 @model LoL1Shot.Pages.CRUD_Combo.AddModel
 @{
 }
+<h2>Nowe Combo</h2>
+<br />
+<br />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<div class="container">
+    <form class="form-horizontal" method="post">
+        <div class="form-group">
+            <label asp-for="newCombo.name" class="control-label col-sm2"></label>
+            <div class="col-sm-6">
+                <input asp-for="newCombo.name" class="form-control">
+                <span asp-validation-for="newCombo.name"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="newCombo.actionsString" class="control-label col-sm2"></label>
+            <div class="col-sm-6">
+                <input asp-for="newCombo.actionsString" class="form-control">
+                <span asp-validation-for="newCombo.actionsString"></span>
+            </div>
+        </div>
+
+        <div>
+            <label asp-for="newCombo.championKey">Champion</label>
+            <select asp-for="newCombo.championKey">
+                @foreach (var c in Model.championList)
+                {
+                    <option value=@c.KeyName>@c.KeyName</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn btn-primary">Zatwierdź</button>
+            </div>
+        </div>
+    </form>
+</div>
