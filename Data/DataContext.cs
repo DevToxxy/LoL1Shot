@@ -8,18 +8,15 @@ using System.Data;
 
 namespace LoL1Shot.Data
 {
-    public class ComboContext : DbContext
+    public class DataContext : DbContext
     {
-        public ComboContext(DbContextOptions<ComboContext> options) : base(options)
-        {
-        }
-        public DbSet<Combo> Combo { get; set; }
-        
+        public DataContext(DbContextOptions options) : base(options) { }
+
+        public DbSet<Champion> Champions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Combo>().ToTable("Combo");
-            modelBuilder.Entity<Combo>();
+            modelBuilder.Entity<Champion>().ToTable("Champion");
         }
-
     }
 }

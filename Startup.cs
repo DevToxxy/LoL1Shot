@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LoL1Shot.Data_Access_Layer;
+using Microsoft.EntityFrameworkCore;
+using LoL1Shot.Data;
 
 namespace Projekt.NET
 {
@@ -47,6 +49,11 @@ namespace Projekt.NET
             //korzystanie z bazy SQL => new ComboSqlDB(Configuration)
 
             services.AddRazorPages();
+
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("OneShotDB"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

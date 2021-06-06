@@ -29,7 +29,7 @@ namespace LoL1Shot.Data_Access_Layer
 
             return new Champion(
                     championStatic.Name,
-                    championStatic.Id,
+                    championStatic.Id.ToString(),
                     championStatic.Stats.HpPerLevel,
                     championStatic.Stats.Hp,
                     championStatic.Stats.Armor,
@@ -77,11 +77,11 @@ namespace LoL1Shot.Data_Access_Layer
         }
 
         /// <summary>
-        /// Zwraca klucz championa o danej nazwie
+        /// Zwraca klucz championa o danej nazwie (klucz, nie numer id)
         /// </summary>
         /// <param name="name">Imię championa</param>
         /// <returns>Klucz championa lub null jeżeli imię championa nie występuje w bazie</returns>
-        public string GetChampionId(string name)
+        public string GetChampionKeyByName(string name)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace LoL1Shot.Data_Access_Layer
                     if (champion.Value.Name == name) return champion.Value.Key;
                 }
             }
-            catch(RiotSharpException)
+            catch (RiotSharpException)
             {
                 throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
                     " lub odwołanie do nieistniejącej strony URL)");
@@ -99,12 +99,26 @@ namespace LoL1Shot.Data_Access_Layer
             return null;
         }
 
-        public Champion GetChampion(string name)
+        public Champion GetChampionByName(string name)
         {
             try
             {
                 return ConvertFromDataDragon(
-                    _riotApi.StaticData.Champions.GetByKeyAsync(GetChampionId(name), _latestVersion).Result);
+                    _riotApi.StaticData.Champions.GetByKeyAsync(GetChampionKeyByName(name), _latestVersion).Result);
+            }
+            catch (RiotSharpException)
+            {
+                throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
+                    " lub odwołanie do nieistniejącej strony URL)");
+            }
+        }
+
+        public Champion GetChampionByKey(string key)
+        {
+            try
+            {
+                return ConvertFromDataDragon(
+                    _riotApi.StaticData.Champions.GetByKeyAsync(key, _latestVersion).Result);
             }
             catch (RiotSharpException)
             {

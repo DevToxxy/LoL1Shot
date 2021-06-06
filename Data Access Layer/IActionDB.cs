@@ -8,8 +8,9 @@ namespace LoL1Shot.Data_Access_Layer
 {
     public interface IActionDB
     {
-        public string GetChampionId(string name);
-        public Champion GetChampion(string name);
+        public string GetChampionKeyByName(string name);
+        public Champion GetChampionByName(string name);
+        public Champion GetChampionByKey(string keyName);
         public List<Champion> GetChampions { get; }
     }
 }
