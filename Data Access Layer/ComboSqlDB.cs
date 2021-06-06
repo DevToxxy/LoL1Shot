@@ -36,7 +36,7 @@ namespace LoL1Shot.Data_Access_Layer
 
                 while (reader.Read())
                 {
-                    ComboList.Add(new Combo());
+                    ComboList.Add(new Combo(int.Parse(reader["Id"]), reader.GetString(1), decimal.Parse(reader["price"].ToString())));
                 }
 
                 reader.Close();
