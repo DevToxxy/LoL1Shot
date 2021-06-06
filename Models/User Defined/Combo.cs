@@ -17,11 +17,24 @@ namespace LoL1Shot.Models
         [Required(ErrorMessage = "Pole 'Nazwa combo' jest obowiązkowe")]
         public string name { get; set; }
 
-        [NotMapped]
+        //[NotMapped]
+        //[BindProperty]
+        //[Display(Name = "Kategoria")]
+        //[Required(ErrorMessage = "Pole 'Kategoria' jest obowiązkowe")]
+        //public List<Category> categories { get; set; }
+
         [BindProperty]
-        [Display(Name = "Kategoria")]
-        [Required(ErrorMessage = "Pole 'Kategoria' jest obowiązkowe")]
-        public List<Category> categories { get; set; }
+        [NotMapped]
+        [Display(Name = "Lista akcji - string")]
+        [Required(ErrorMessage = "Pole 'Lista akcji - string' jest obowiązkowe")]
+        public string actionsString { get; set; }
+
+        [BindProperty]
+        [NotMapped]
+        [Display(Name = "Nazwa Championa")]
+        [Required(ErrorMessage = "Pole 'Nazwa Championa' jest obowiązkowe")]
+        public string championKey { get; set; }
+
 
         [BindProperty]
         [NotMapped]
@@ -31,11 +44,15 @@ namespace LoL1Shot.Models
 
         public Combo() { }
 
-        public Combo(string name, List<Category> categories, List<Action> actions)
+        public Combo(string name, /*List<Category> categories,*/ string actionsString,string championKey/*, List<Action> actions*/)
         {
             this.name = name;
-            this.categories = categories;
-            this.actions = actions;
+            //this.categories = categories;
+            this.actionsString = actionsString;
+            this.championKey = championKey;
+            //this.actions = actions; //liste akcji inicjalizujemy pozniej, na podstawie stringa z bazy danych
+                                      //pobieramy informacje o championie i wpierdalamy odpowiednie wartosci z json'a do listy
+
         }
     }
 }
