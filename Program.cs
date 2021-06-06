@@ -10,6 +10,8 @@ using LoL1Shot.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using LoL1Shot.Data_Access_Layer;
+using LoL1Shot.Models;
 
 namespace Projekt.NET
 {
@@ -32,13 +34,25 @@ namespace Projekt.NET
                     var context = services.GetRequiredService<DataContext>();
                     context.Database.EnsureCreated();
 
-                    var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
-                    databaseCreator.CreateTables();
+                    //var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
+                    //databaseCreator.CreateTables();
+
+                    List<Champion> champions = services.GetRequiredService<IActionDB>().GetChampions;
+
+                    foreach (Champion champion in champions)
+                    {
+                        if (!context.Champions.Contains(champion))
+                        {
+                            context.Champions.Add(champion);
+                        }
+                    }
+
+                    context.SaveChanges();
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred when creating the DB.");
+                    logger.LogError(ex, $"An error occurred when creating the DB - {ex.Message}");
                 }
             }
         }

@@ -29,7 +29,7 @@ namespace LoL1Shot.Data_Access_Layer
 
             return new Champion(
                     championStatic.Name,
-                    championStatic.Id.ToString(),
+                    championStatic.Key,
                     championStatic.Stats.HpPerLevel,
                     championStatic.Stats.Hp,
                     championStatic.Stats.Armor,
@@ -66,6 +66,31 @@ namespace LoL1Shot.Data_Access_Layer
                 }
 
                 return champions;
+            }
+        }
+
+
+        public Dictionary<string, string> GetChamionsKeys
+        {
+            get
+            {
+                Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
+
+                try
+                {
+                    foreach (var champion in
+                        _riotApi.StaticData.Champions.GetAllAsync(_latestVersion).Result.Champions)
+                    {
+                        keyValuePairs.Add(champion.Value.Key,champion.Value.Name);
+                    }
+                }
+                catch (RiotSharpException)
+                {
+                    throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
+                        " lub odwołanie do nieistniejącej strony URL)");
+                }
+
+                return keyValuePairs;
             }
         }
 
