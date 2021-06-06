@@ -24,7 +24,7 @@ namespace LoL1Shot.Models
         //public List<Category> categories { get; set; }
 
         [BindProperty]
-        [NotMapped]
+        //[NotMapped]
         [Display(Name = "Lista akcji - string")]
         [Required(ErrorMessage = "Pole 'Lista akcji - string' jest obowiązkowe")]
         public string actionsString { get; set; }
@@ -39,7 +39,6 @@ namespace LoL1Shot.Models
         [BindProperty]
         [NotMapped]
         [Display(Name = "Lista akcji")]
-        [Required(ErrorMessage = "Pole 'Lista akcji' jest obowiązkowe")]
         public List<Action> actions { get; set; }
 
         public Combo() { }

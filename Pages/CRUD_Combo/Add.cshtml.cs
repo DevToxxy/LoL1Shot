@@ -39,14 +39,13 @@ namespace LoL1Shot.Pages.CRUD_Combo
 
         public void OnGet()
         {
-
             championList = _context.Champions.ToList();
         }
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                return RedirectToPage("/CRUD_Combo/Add");
             }
             comboDB.Add(newCombo);
             return RedirectToPage("/Index");
