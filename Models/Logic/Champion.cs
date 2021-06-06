@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,18 +47,16 @@ namespace LoL1Shot.Models
         /// Klucz (nie to samo co numer id)
         /// </summary>
         [Display(Name = "Klucz championa")]
-        [Key]
-        public string KeyName { get; set; }
-        
-        public double HPPerLevel { get; }
-        public double HP { get;  }
-        public double Armor { get; }
-        public double ArmorPerLevel { get; }
-        public double SpellBlockPerLevel { get; }
-        public Spell Q { get; }
-        public Spell W { get; }
-        public Spell E { get; }
-        public Spell R { get; }
-        public AutoAttack AA { get; }
+        [Key] public string KeyName { get; set; }
+        [NotMapped] public double HPPerLevel { get; }
+        [NotMapped] public double HP { get;  }
+        [NotMapped] public double Armor { get; }
+        [NotMapped] public double ArmorPerLevel { get; }
+        [NotMapped] public double SpellBlockPerLevel { get; }
+        [NotMapped] public Spell Q { get; }
+        [NotMapped] public Spell W { get; }
+        [NotMapped] public Spell E { get; }
+        [NotMapped] public Spell R { get; }
+        [NotMapped] public AutoAttack AA { get; }
     }
 }
