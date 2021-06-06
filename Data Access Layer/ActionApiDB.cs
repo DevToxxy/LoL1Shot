@@ -70,7 +70,7 @@ namespace LoL1Shot.Data_Access_Layer
         }
 
 
-        public Dictionary<string, string> GetChamionsKeys
+        public Dictionary<string, string> GetChampionsKeys
         {
             get
             {
