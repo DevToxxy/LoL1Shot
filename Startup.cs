@@ -41,6 +41,8 @@ namespace Projekt.NET
             services.AddRazorPages(options =>
             {
                 options.Conventions.AuthorizePage("/Login/DummyLoginPage");
+                options.Conventions.AuthorizePage("/CRUD_Combo/Add");
+
             });
 
             services.Add(new ServiceDescriptor(typeof(IComboDB), new ComboSqlDB(Configuration)));

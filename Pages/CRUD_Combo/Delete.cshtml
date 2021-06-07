@@ -2,3 +2,20 @@
 @model LoL1Shot.Pages.CRUD_Combo.DeleteModel
 @{
 }
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<h2>Na pewno chcesz usunąć Combo?</h2>
+<div class="container">
+    <form class="form-horizontal" method="post">
+        @*@Html.Hidden("combo.id", Model.id)*@
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn btn-primary">Tak</button>
+            </div>
+        </div>
+    </form>
+</div>

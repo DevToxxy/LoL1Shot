@@ -79,7 +79,7 @@ namespace LoL1Shot.Data_Access_Layer
             SqlCommand cmd = new SqlCommand("sp_ComboDelete", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@ComboID", SqlDbType.Int).Value = _id;
+            cmd.Parameters.Add("@comboID", SqlDbType.Int).Value = _id;
 
             con.Open();
             cmd.ExecuteNonQuery();
