@@ -24,13 +24,11 @@ namespace LoL1Shot.Models
         //public List<Category> categories { get; set; }
 
         [BindProperty]
-        //[NotMapped]
         [Display(Name = "Lista akcji - string")]
         [Required(ErrorMessage = "Pole 'Lista akcji - string' jest obowiązkowe")]
         public string actionsString { get; set; }
 
         [BindProperty]
-        [NotMapped]
         [Display(Name = "Nazwa Championa")]
         [Required(ErrorMessage = "Pole 'Nazwa Championa' jest obowiązkowe")]
         public string championKey { get; set; }

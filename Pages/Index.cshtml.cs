@@ -26,13 +26,11 @@ namespace Projekt.NET.Pages
             _configuration = configuration;
             _actionDB = actionDB;
             comboDB = _comboDB;
-
         }
 
         public void OnGet()
         {
             comboList = comboDB.List;
-
         }
     }
 }
