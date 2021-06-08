@@ -88,7 +88,7 @@ namespace LoL1Shot.Data_Access_Layer
 
         public Combo Get(int _id)
         {
-            Combo Combo = null;
+            Combo combo = new Combo();
 
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("OneShotDB"));
             SqlCommand cmd = new SqlCommand("sp_ComboGet", con);
@@ -101,13 +101,13 @@ namespace LoL1Shot.Data_Access_Layer
 
             while (reader.Read())
             {
-                Combo = new Combo(int.Parse(reader["Id"].ToString()), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+                combo = new Combo(int.Parse(reader["Id"].ToString()), reader.GetString(1), reader.GetString(2), reader.GetString(3));
             }
 
             reader.Close();
             con.Close();
 
-            return Combo;
+            return combo;
         }
 
         public void Update(Combo _Combo)
@@ -119,13 +119,9 @@ namespace LoL1Shot.Data_Access_Layer
             SqlCommand cmd = new SqlCommand("sp_ComboUpdate", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@name", SqlDbType.Int).Value = _Combo.name;
-
-
-            cmd.Parameters.Add("@actionList", SqlDbType.Int).Value = _Combo.actionsString;
-
-
-            cmd.Parameters.Add("@championKey", SqlDbType.Int).Value = _Combo.championKey;
+            cmd.Parameters.Add("@name", SqlDbType.NChar).Value = _Combo.name;
+            cmd.Parameters.Add("@actionList", SqlDbType.NChar).Value = _Combo.actionsString;
+            cmd.Parameters.Add("@championKey", SqlDbType.NVarChar).Value = _Combo.championKey;
 
             cmd.Parameters.Add("@comboID", SqlDbType.Int).Value = _Combo.id;
 
