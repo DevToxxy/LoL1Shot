@@ -17,28 +17,33 @@
                 @Html.DisplayNameFor(model => Model.comboList[0].name)
             </th>
             <th scope="col">
+                @Html.DisplayNameFor(model => Model.comboList[0].id)
+            </th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => Model.comboList[0].actionsString)
             </th>
             <th scope="col">
                 @Html.DisplayNameFor(model => Model.comboList[0].championKey)
             </th>
+
             <th scope="col">Akcja</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var p in Model.comboList)
         {
-            <tr>
-                <th scope="row">@Html.DisplayFor(m => p.name)</th>
-                <td>@Html.DisplayFor(m => p.actionsString)</td>
-                <td>@Html.DisplayFor(m => p.championKey)</td>
+        <tr>
+            <th scope="row">@Html.DisplayFor(m => p.name)</th>
+            <td>@Html.DisplayFor(m => p.id)</td>
+            <td>@Html.DisplayFor(m => p.actionsString)</td>
+            <td>@Html.DisplayFor(m => p.championKey)</td>
 
 
-                <td>
-                    <a asp-page="CRUD_Combo/Update" asp-route-id=@p.name>Edytuj</a> |
-                    <a asp-page="CRUD_Combo/Delete" asp-route-id=@p.name>Kasuj</a>
-                </td>
-            </tr>
+            <td>
+                <a asp-page="/CRUD_Combo/Update" asp-route-id=@p.id>Edytuj</a> |
+                <a asp-page="/CRUD_Combo/Delete" asp-route-id=@p.id>Kasuj</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

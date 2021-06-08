@@ -17,17 +17,15 @@ namespace LoL1Shot.Pages.CRUD_Combo
         {
             comboDB = _comboDB;
         }
-        public void OnGet(int _id)
-        {
-            comboDB.Delete(_id);
-
-        }
+        
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return RedirectToPage("/CRUD_Combo/Delete");
             }
+            comboDB.Delete(id);
+
             return RedirectToPage("/Index");
         }
     }
