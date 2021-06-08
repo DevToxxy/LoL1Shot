@@ -36,7 +36,7 @@ namespace LoL1Shot.Data_Access_Layer
 
                 while (reader.Read())
                 {
-                   ComboList.Add(new Combo(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                   ComboList.Add(new Combo(int.Parse(reader["Id"].ToString()),reader.GetString(1), reader.GetString(2), reader.GetString(3)));
                 }
 
                 reader.Close();
@@ -79,7 +79,7 @@ namespace LoL1Shot.Data_Access_Layer
             SqlCommand cmd = new SqlCommand("sp_ComboDelete", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@ComboID", SqlDbType.Int).Value = _id;
+            cmd.Parameters.Add("@comboID", SqlDbType.Int).Value = _id;
 
             con.Open();
             cmd.ExecuteNonQuery();
@@ -88,7 +88,7 @@ namespace LoL1Shot.Data_Access_Layer
 
         public Combo Get(int _id)
         {
-            Combo Combo = null;
+            Combo combo = new Combo();
 
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("OneShotDB"));
             SqlCommand cmd = new SqlCommand("sp_ComboGet", con);
@@ -101,13 +101,13 @@ namespace LoL1Shot.Data_Access_Layer
 
             while (reader.Read())
             {
-                Combo = JsonConvert.DeserializeObject<Combo>(reader[1].ToString());
+                combo = new Combo(int.Parse(reader["Id"].ToString()), reader.GetString(1), reader.GetString(2), reader.GetString(3));
             }
 
             reader.Close();
             con.Close();
 
-            return Combo;
+            return combo;
         }
 
         public void Update(Combo _Combo)
@@ -116,13 +116,16 @@ namespace LoL1Shot.Data_Access_Layer
 
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("OneShotDB"));
 
-            SqlCommand cmd = new SqlCommand("sp_ComboEdit", con);
+            SqlCommand cmd = new SqlCommand("sp_ComboUpdate", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            //cmd.Parameters.Add("@ComboID", SqlDbType.Int).Value = _Combo.id;
-            cmd.Parameters.Add("@name", SqlDbType.VarChar, 50).Value = _Combo.name;
-            //cmd.Parameters.Add("@price", SqlDbType.Money).Value = _Combo.price;
-            cmd.Parameters.Add("@categoryID", SqlDbType.Int).Value = 5;
+            cmd.Parameters.Add("@name", SqlDbType.NChar).Value = _Combo.name;
+            cmd.Parameters.Add("@actionList", SqlDbType.NChar).Value = _Combo.actionsString;
+            cmd.Parameters.Add("@championKey", SqlDbType.NVarChar).Value = _Combo.championKey;
+
+            cmd.Parameters.Add("@comboID", SqlDbType.Int).Value = _Combo.id;
+
+
 
             con.Open();
             cmd.ExecuteNonQuery();

@@ -13,9 +13,15 @@ namespace LoL1Shot.Models
     public class Combo
     {
         [BindProperty]
+        [Display(Name = "Id")]
+        public int id { get; set; }
+
+        [BindProperty]
         [Display(Name = "Nazwa combo")]
         [Required(ErrorMessage = "Pole 'Nazwa combo' jest obowiązkowe")]
         public string name { get; set; }
+
+        
 
         //[NotMapped]
         //[BindProperty]
@@ -41,14 +47,15 @@ namespace LoL1Shot.Models
 
         public Combo() { }
 
-        public Combo(string name, /*List<Category> categories,*/ string actionsString,string championKey/*, List<Action> actions*/)
+        public Combo(int id, string name, /*List<Category> categories,*/ string actionsString,string championKey/*, List<Action> actions*/)
         {
+            this.id = id;
             this.name = name;
             //this.categories = categories;
             this.actionsString = actionsString;
             this.championKey = championKey;
             //this.actions = actions; //liste akcji inicjalizujemy pozniej, na podstawie stringa z bazy danych
-                                      //pobieramy informacje o championie i umieszczamy odpowiednie wartosci z json'a do listy
+                                      //pobieramy informacje o championie i wpierdalamy odpowiednie wartosci z json'a do listy
 
         }
     }
