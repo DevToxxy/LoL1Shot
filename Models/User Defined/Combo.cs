@@ -48,7 +48,7 @@ namespace LoL1Shot.Models
             this.actionsString = actionsString;
             this.championKey = championKey;
             //this.actions = actions; //liste akcji inicjalizujemy pozniej, na podstawie stringa z bazy danych
-                                      //pobieramy informacje o championie i wpierdalamy odpowiednie wartosci z json'a do listy
+                                      //pobieramy informacje o championie i umieszczamy odpowiednie wartosci z json'a do listy
 
         }
     }

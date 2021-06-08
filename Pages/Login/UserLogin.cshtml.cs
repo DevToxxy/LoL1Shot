@@ -58,7 +58,7 @@ namespace LoL1Shot.Pages.Login
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl)
         {
-            //if (!ModelState.IsValid) nie dziala??????
+            //if (!ModelState.IsValid)
             //{
             //    return Page();
             //}   
