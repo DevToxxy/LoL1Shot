@@ -8,14 +8,19 @@ namespace LoL1Shot.Models.CustomExtensions
 {
     public static class IConfigurationExtensions
     {
-        public static string GetSpellImagesDirPath(this IConfiguration configuration)
+        public static string GetSpellImagesURL(this IConfiguration configuration)
         {
-            return configuration.GetSection("DataDragon").GetSection("SpellImagesPath").Value;
+            return configuration.GetSection("DataDragonURLs").GetSection("SpellImages").Value;
         }
 
-        public static string GetChampionImagesDirPath(this IConfiguration configuration)
+        public static string GetChampionImagesURL(this IConfiguration configuration)
         {
-            return configuration.GetSection("DataDragon").GetSection("ChampionImagesPath").Value;
+            return configuration.GetSection("DataDragonURLs").GetSection("ChampionTiles").Value;
+        }
+
+        public static string GetChampionSplashesURL(this IConfiguration configuration)
+        {
+            return configuration.GetSection("DataDragonURLs").GetSection("ChampionSplash").Value;
         }
     }
 }

@@ -150,7 +150,7 @@ namespace LoL1Shot.Data_Access_Layer
             }
         }
 
-        public string GetSpellImagePath(string championKeyName, SpellKey spellKey)
+        public string GetSpellImageURL(string championKeyName, SpellKey spellKey)
         {
             int index = 0;
             switch (spellKey)
@@ -177,7 +177,7 @@ namespace LoL1Shot.Data_Access_Layer
                 string imageName = _riotApi.StaticData.Champions.GetByKeyAsync(
                 GetChampionKeyByName(championKeyName), _latestVersion).Result.Spells[index].Image.Full;
 
-                url = _configuration.GetSpellImagesDirPath() + imageName;
+                url = _configuration.GetSpellImagesURL() + imageName;
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
@@ -202,7 +202,7 @@ namespace LoL1Shot.Data_Access_Layer
                 return null;
         }
 
-        public string GetChampionImagePath(string championKeyName)
+        public string GetChampionImageURL(string championKeyName)
         {
             string url;
             bool exist = false;
@@ -212,7 +212,35 @@ namespace LoL1Shot.Data_Access_Layer
                 string imageName = _riotApi.StaticData.Champions.GetByKeyAsync(
                 GetChampionKeyByName(championKeyName), _latestVersion).Result.Image.Full;
 
-                url = _configuration.GetChampionImagesDirPath() + imageName;
+                url = _configuration.GetChampionImagesURL() + imageName;
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    exist = response.StatusCode == HttpStatusCode.OK;
+                }
+            }
+            catch (RiotSharpException e)
+            {
+                throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
+                    " lub odwołanie do nieistniejącej strony URL):" + e.Message);
+            }
+
+            if (exist)
+                return url;
+            else
+                return null;
+        }
+
+        public string GetChampionSplashURL(string championKeyName)
+        {
+            string url;
+            bool exist = false;
+
+            try
+            {
+                url = _configuration.GetChampionSplashesURL() + championKeyName + "_0.jpg";
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 

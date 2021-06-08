@@ -13,7 +13,9 @@ namespace LoL1Shot.Data_Access_Layer
         public Champion GetChampionByKey(string keyName);
         public List<Champion> GetChampions { get; }
         public Dictionary<string, string> GetChampionsKeys { get; }
-        public string GetSpellImagePath(string championKeyName, SpellKey spellKey);
-        public string GetChampionImagePath(string championKeyName);
+        public string GetSpellImageURL(string championKeyName, SpellKey spellKey);
+        public string GetChampionImageURL(string championKeyName);
+        public string GetChampionSplashURL(string championKeyName);
+
     }
 }
