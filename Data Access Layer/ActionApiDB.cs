@@ -1,11 +1,10 @@
 ﻿using LoL1Shot.Models;
+using LoL1Shot.Models.CustomExtensions;
 using Microsoft.Extensions.Configuration;
 using RiotSharp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Drawing;
+using System.Net;
 
 namespace LoL1Shot.Data_Access_Layer
 {
@@ -68,7 +67,6 @@ namespace LoL1Shot.Data_Access_Layer
                 return champions;
             }
         }
-
 
         public Dictionary<string, string> GetChampionsKeys
         {
@@ -150,6 +148,89 @@ namespace LoL1Shot.Data_Access_Layer
                 throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
                     " lub odwołanie do nieistniejącej strony URL)");
             }
+        }
+
+        public string GetSpellImagePath(string championKeyName, SpellKey spellKey)
+        {
+            int index = 0;
+            switch (spellKey)
+            {
+                case SpellKey.Q:
+                    index = 0;
+                    break;
+                case SpellKey.W:
+                    index = 1;
+                    break;
+                case SpellKey.E:
+                    index = 2;
+                    break;
+                case SpellKey.R:
+                    index = 3;
+                    break;
+            }
+
+            string url;
+            bool exist = false;
+
+            try
+            {
+                string imageName = _riotApi.StaticData.Champions.GetByKeyAsync(
+                GetChampionKeyByName(championKeyName), _latestVersion).Result.Spells[index].Image.Full;
+
+                url = _configuration.GetSpellImagesDirPath() + imageName;
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    exist = response.StatusCode == HttpStatusCode.OK;
+                }
+            }
+            catch (RiotSharpException e)
+            {
+                throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
+                    " lub odwołanie do nieistniejącej strony URL):"+e.Message);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+            if (exist)
+                return url;
+            else
+                return null;
+        }
+
+        public string GetChampionImagePath(string championKeyName)
+        {
+            string url;
+            bool exist = false;
+
+            try
+            {
+                string imageName = _riotApi.StaticData.Champions.GetByKeyAsync(
+                GetChampionKeyByName(championKeyName), _latestVersion).Result.Image.Full;
+
+                url = _configuration.GetChampionImagesDirPath() + imageName;
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    exist = response.StatusCode == HttpStatusCode.OK;
+                }
+            }
+            catch (RiotSharpException e)
+            {
+                throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
+                    " lub odwołanie do nieistniejącej strony URL):" + e.Message);
+            }
+
+            if (exist)
+                return url;
+            else
+                return null;
         }
     }
 }
