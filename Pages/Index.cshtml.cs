@@ -16,7 +16,7 @@ namespace Projekt.NET.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IConfiguration _configuration;
-        private IActionDB _actionDB;
+        public readonly IActionDB _actionDB;
         IComboDB comboDB;
         public List<Combo> comboList = new List<Combo>();
 

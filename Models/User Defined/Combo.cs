@@ -21,8 +21,6 @@ namespace LoL1Shot.Models
         [Required(ErrorMessage = "Pole 'Nazwa combo' jest obowiązkowe")]
         public string name { get; set; }
 
-        
-
         //[NotMapped]
         //[BindProperty]
         //[Display(Name = "Kategoria")]
@@ -39,15 +37,51 @@ namespace LoL1Shot.Models
         [Required(ErrorMessage = "Pole 'Nazwa Championa' jest obowiązkowe")]
         public string championKey { get; set; }
 
-
-        [BindProperty]
         [NotMapped]
         [Display(Name = "Lista akcji")]
         public List<Action> actions { get; set; }
 
+        private static List<Action> ConverActionStringToList(string actionString)
+        {
+            List<Action> actions = new List<Action>();
+
+            string[] actionStrings = actionString.Split(',');
+            for (int i = 0; i < actionStrings.Count(); i++)
+            {
+                actionStrings[i] = actionStrings[i].Replace(" ", "");
+
+                Action actionObject;
+
+                if (actionStrings[i] == "A")
+                    actionObject = new AutoAttack();
+                else
+                    switch (actionStrings[i])
+                    {
+                        case "Q":
+                            actionObject = new Spell(SpellKey.Q);
+                            break;
+                        case "W":
+                            actionObject = new Spell(SpellKey.W);
+                            break;
+                        case "E":
+                            actionObject = new Spell(SpellKey.E);
+                            break;
+                        case "R":
+                            actionObject = new Spell(SpellKey.R);
+                            break;
+                        default:
+                            throw new Exception("Nieprawidłowy symbol w actionString");
+                    }
+
+                actions.Add(actionObject);
+            }
+
+            return actions;
+        }
+
         public Combo() { }
 
-        public Combo(int id, string name, /*List<Category> categories,*/ string actionsString,string championKey/*, List<Action> actions*/)
+        public Combo(int id, string name, string actionsString, string championKey)
         {
             this.id = id;
             this.name = name;
@@ -55,8 +89,9 @@ namespace LoL1Shot.Models
             this.actionsString = actionsString;
             this.championKey = championKey;
             //this.actions = actions; //liste akcji inicjalizujemy pozniej, na podstawie stringa z bazy danych
-                                      //pobieramy informacje o championie i wpierdalamy odpowiednie wartosci z json'a do listy
+            //pobieramy informacje o championie i wpierdalamy odpowiednie wartosci z json'a do listy
 
+            actions = ConverActionStringToList(actionsString);
         }
     }
 }

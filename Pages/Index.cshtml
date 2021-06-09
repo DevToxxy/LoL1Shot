@@ -1,8 +1,22 @@
 ﻿@page
 @model IndexModel
+@using LoL1Shot.Models;
 @{
     ViewData["Title"] = "Home page";
 }
+<style>
+    #grid {
+        display: grid;
+        height: 50px;
+        width: 400px;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: 50px;
+    }
+    #actionImage {
+        background-image: url("images/imageError.jpg");
+        background-size: 50px 50px;
+    }
+</style>
 
 <h2>Lista Combo</h2>
 <div class="row col-sm-12">
@@ -30,18 +44,39 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var p in Model.comboList)
+        @foreach (var combo in Model.comboList)
         {
         <tr>
-            <th scope="row">@Html.DisplayFor(m => p.name)</th>
-            <td>@Html.DisplayFor(m => p.id)</td>
-            <td>@Html.DisplayFor(m => p.actionsString)</td>
-            <td>@Html.DisplayFor(m => p.championKey)</td>
+            <th scope="row">@Html.DisplayFor(m => combo.name)</th>
+            <td>
+                <img 
+                     src=@Model._actionDB.GetChampionImageURL(combo.championKey) 
+                     alt="~/images/imageError.jpg" width="60" height="60"/>
+            </td>
+            <td>
+                <div id="grid">
+                    @foreach (LoL1Shot.Models.Action action in combo.actions)
+                    { 
+                        string Url;
+                        if (action is AutoAttack) Url = Model._actionDB.GetAutoAttackImageURL;
+                            else Url = Model._actionDB.GetSpellImageURL(combo.championKey, (action as Spell).SpellKey);
+
+                    <div id="actionImage"
+                         style="background-image:
+                            url(@Url);"
+                        );">
+                    </div>
+                    }
+                </div>
+            </td>
+            <td>@Html.DisplayFor(m => combo.id)</td>
+            <td>@Html.DisplayFor(m => combo.actionsString)</td>
+            <td>@Html.DisplayFor(m => combo.championKey)</td>
 
 
             <td>
-                <a asp-page="/CRUD_Combo/Update" asp-route-id=@p.id>Edytuj</a> |
-                <a asp-page="/CRUD_Combo/Delete" asp-route-id=@p.id>Kasuj</a>
+                <a asp-page="/CRUD_Combo/Update" asp-route-id=@combo.id>Edytuj</a> |
+                <a asp-page="/CRUD_Combo/Delete" asp-route-id=@combo.id>Kasuj</a>
             </td>
         </tr>
         }
