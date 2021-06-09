@@ -32,7 +32,7 @@ namespace LoL1Shot.Pages.Main
         public void OnGet()
         {
             defenders = _actionDB.GetChampions;
-            image = _actionDB.GetSpellImagePath("Ashe", SpellKey.R);
+            //image = _actionDB.GetSpellImagePath("Ashe", SpellKey.R);
         }
     }
 }
