@@ -9,17 +9,20 @@ namespace LoL1Shot.Models
     {
         public SpellKey SpellKey { get; }
         public string Name { get; }
+        public double Damage { get; }
 
-        public Spell(string name, SpellKey spellKey) : base()
+        public Spell(string name, SpellKey spellKey, double damage) : base()
         {
             SpellKey = spellKey;
             Name = name;
+            Damage = damage;
         }
 
         public Spell(SpellKey spellKey) : base()
         {
             SpellKey = spellKey;
             Name = null;
+            Damage = 0;
         }
 
         public Spell() : base() { }

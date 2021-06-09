@@ -32,7 +32,11 @@ namespace LoL1Shot.Pages.Main
         public void OnGet()
         {
             defenders = _actionDB.GetChampions;
-            image = _actionDB.GetSpellImageURL("Ashe", SpellKey.R);
+        }
+
+        private bool IsOneShot(Combo combo, Champion defender)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -24,10 +24,37 @@ namespace LoL1Shot.Data_Access_Layer
             //championStatic.Stats.MpPerLevel;
             //championStatic.Spells[0].EffectBurns;
 
-            Spell q = new Spell(championStatic.Spells[0].Name, SpellKey.Q);
-            Spell w = new Spell(championStatic.Spells[1].Name, SpellKey.W);
-            Spell e = new Spell(championStatic.Spells[2].Name, SpellKey.E);
-            Spell r = new Spell(championStatic.Spells[3].Name, SpellKey.R);
+            Spell[] spells = new Spell[4];
+            for (int i = 0; i < 4; i++)
+            {
+                SpellKey spellKey;
+                switch (i)
+                {
+                    case 0:
+                        spellKey = SpellKey.Q;
+                        break;
+                    case 1:
+                        spellKey = SpellKey.W;
+                        break;
+                    case 2:
+                        spellKey = SpellKey.E;
+                        break;
+                    case 3:
+                        spellKey = SpellKey.R;
+                        break;
+                    default:
+                        spellKey = SpellKey.Q; 
+                        break;
+                }
+
+                string[] values = championStatic.Spells[i].EffectBurns[1].Split('/');
+
+                spells[i] = new Spell(
+                    championStatic.Spells[i].Name,
+                    spellKey,
+                    double.Parse(values[values.Length-1])
+                    );
+            }
 
             return new Champion(
                     championStatic.Name,
@@ -37,10 +64,10 @@ namespace LoL1Shot.Data_Access_Layer
                     championStatic.Stats.Armor,
                     championStatic.Stats.ArmorPerLevel,
                     championStatic.Stats.SpellBlockPerLevel,
-                    q, 
-                    w, 
-                    e, 
-                    r,
+                    spells[0],
+                    spells[1], 
+                    spells[2],
+                    spells[3],
                     new AutoAttack(
                         championStatic.Stats.AttackDamage,
                         championStatic.Stats.AttackDamagePerLevel)
