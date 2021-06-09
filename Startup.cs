@@ -42,7 +42,8 @@ namespace Projekt.NET
             {
                 options.Conventions.AuthorizePage("/Login/DummyLoginPage");
                 options.Conventions.AuthorizePage("/CRUD_Combo/Add");
-
+                options.Conventions.AuthorizePage("/CRUD_Combo/Update");
+                options.Conventions.AuthorizePage("/CRUD_Combo/Delete");
             });
 
             services.Add(new ServiceDescriptor(typeof(IComboDB), new ComboSqlDB(Configuration)));

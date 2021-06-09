@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LoL1Shot.Data;
 using LoL1Shot.Data_Access_Layer;
 using LoL1Shot.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,18 +14,24 @@ namespace LoL1Shot.Pages.CRUD_Combo
     {
         [BindProperty]
         public Combo combo { get; set; }
+
         [BindProperty]
         public int id { get; set; }
-        IComboDB comboDB;
-        public UpdateModel(IComboDB _comboDB)
+
+        public IList<Champion> championList;
+        private IComboDB _comboDB;
+
+        public UpdateModel(IComboDB _comboDB, DataContext context)
         {
-            comboDB = _comboDB;
-        }
-        public void OnGet()
-        {
-            combo = comboDB.Get(id);
+            this._comboDB = _comboDB;
+            championList = context.Champions.ToList();
         }
 
+        public void OnGet(int id)
+        {
+            combo = _comboDB.Get(id);
+            combo.id = id;
+        }
 
         public IActionResult OnPost()
         {
@@ -32,7 +39,10 @@ namespace LoL1Shot.Pages.CRUD_Combo
             {
                 return RedirectToPage("/CRUD_Combo/Update");
             }
-            comboDB.Update(combo);
+
+            combo.id = id;
+            _comboDB.Update(combo);
+
             return RedirectToPage("/Index");
         }
     }

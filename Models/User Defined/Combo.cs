@@ -17,7 +17,7 @@ namespace LoL1Shot.Models
         public int id { get; set; }
 
         [BindProperty]
-        [Display(Name = "Nazwa combo")]
+        [Display(Name = "Nazwa kombinacji")]
         [Required(ErrorMessage = "Pole 'Nazwa combo' jest obowiązkowe")]
         public string name { get; set; }
 
@@ -33,12 +33,12 @@ namespace LoL1Shot.Models
         public string actionsString { get; set; }
 
         [BindProperty]
-        [Display(Name = "Nazwa Championa")]
-        [Required(ErrorMessage = "Pole 'Nazwa Championa' jest obowiązkowe")]
+        [Display(Name = "Imię bohatera")]
+        [Required(ErrorMessage = "Pole 'Imię bohatera' jest obowiązkowe")]
         public string championKey { get; set; }
 
         [NotMapped]
-        [Display(Name = "Lista akcji")]
+        [Display(Name = "Kombinacja")]
         public List<Action> actions { get; set; }
 
         private static List<Action> ConverActionStringToList(string actionString)
