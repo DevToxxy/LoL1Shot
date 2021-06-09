@@ -23,8 +23,6 @@ namespace LoL1Shot.Data_Access_Layer
         {
             get
             {
-                //throw new NotImplementedException();
-
                 List<Combo> ComboList = new List<Combo>();
 
                 SqlConnection con = new SqlConnection(_configuration.GetConnectionString("OneShotDB")); ;
@@ -53,10 +51,6 @@ namespace LoL1Shot.Data_Access_Layer
 
         public void Add(Combo _Combo)
         {
-            //throw new NotImplementedException();
-
-            //JsonConvert.SerializeObject(_Combo); //<<<<<<<<<<<<<<<<NALEŻY DODAĆ POLE W TABELI NA JSON
-
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("OneShotDB"));
 
             SqlCommand cmd = new SqlCommand("sp_ComboAdd", con);
@@ -77,8 +71,6 @@ namespace LoL1Shot.Data_Access_Layer
 
         public void Delete(int _id)
         {
-            //throw new NotImplementedException();
-
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("OneShotDB"));
 
             SqlCommand cmd = new SqlCommand("sp_ComboDelete", con);
@@ -98,7 +90,7 @@ namespace LoL1Shot.Data_Access_Layer
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("OneShotDB"));
             SqlCommand cmd = new SqlCommand("sp_ComboGet", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@ComboID", SqlDbType.Int).Value = _id;
+            cmd.Parameters.Add("@comboID", SqlDbType.Int).Value = _id;
 
             con.Open();
 
@@ -106,7 +98,11 @@ namespace LoL1Shot.Data_Access_Layer
 
             while (reader.Read())
             {
-                combo = new Combo(int.Parse(reader["Id"].ToString()), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+                combo = new Combo(
+                    int.Parse(reader["Id"].ToString()),
+                    reader.GetString(1),
+                    reader.GetString(2),
+                    reader.GetString(3));
             }
 
             reader.Close();
@@ -117,20 +113,15 @@ namespace LoL1Shot.Data_Access_Layer
 
         public void Update(Combo _Combo)
         {
-            //throw new NotImplementedException();
-
             SqlConnection con = new SqlConnection(_configuration.GetConnectionString("OneShotDB"));
 
             SqlCommand cmd = new SqlCommand("sp_ComboUpdate", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@name", SqlDbType.NChar).Value = _Combo.name;
-            cmd.Parameters.Add("@actionList", SqlDbType.NChar).Value = _Combo.actionsString;
-            cmd.Parameters.Add("@championKey", SqlDbType.NVarChar).Value = _Combo.championKey;
-
+            cmd.Parameters.Add("@name", SqlDbType.NChar, 50).Value = _Combo.name;
+            cmd.Parameters.Add("@actionList", SqlDbType.NChar, 100).Value = _Combo.actionsString;
+            cmd.Parameters.Add("@championKey", SqlDbType.NVarChar, 450).Value = _Combo.championKey;
             cmd.Parameters.Add("@comboID", SqlDbType.Int).Value = _Combo.id;
-
-
 
             con.Open();
             cmd.ExecuteNonQuery();

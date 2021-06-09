@@ -16,10 +16,9 @@ namespace LoL1Shot.Pages.CRUD_Combo
 {
     public class AddModel : PageModel
     {
-        private readonly ILogger<AddModel> _logger;
-        private readonly IConfiguration _configuration;
         private IActionDB _actionDB;
         private readonly DataContext _context;
+
         [BindProperty]
         public Combo newCombo { get; set; }
 
@@ -27,20 +26,18 @@ namespace LoL1Shot.Pages.CRUD_Combo
 
         public IList<Champion> championList = new List<Champion>(); 
 
-        public AddModel(ILogger<AddModel> logger,IComboDB _comboDB, IConfiguration configuration, IActionDB actionDB, DataContext context)
+        public AddModel(IComboDB _comboDB, IActionDB actionDB, DataContext context)
         {
-            _logger = logger;
             comboDB = _comboDB;
-            _configuration = configuration;
             _actionDB = actionDB;
             _context = context;
-
         }
 
         public void OnGet()
         {
             championList = _context.Champions.ToList();
         }
+
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)

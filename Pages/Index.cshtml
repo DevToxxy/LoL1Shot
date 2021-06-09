@@ -30,16 +30,14 @@
             <th scope="col">
                 @Html.DisplayNameFor(model => Model.comboList[0].name)
             </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => Model.comboList[0].id)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => Model.comboList[0].actionsString)
-            </th>
+            <th scope="col">Ikona</th>
             <th scope="col">
                 @Html.DisplayNameFor(model => Model.comboList[0].championKey)
             </th>
-
+            <th scope="col">Combos</th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => Model.comboList[0].actionsString)
+            </th>
             <th scope="col">Akcja</th>
         </tr>
     </thead>
@@ -49,31 +47,27 @@
         <tr>
             <th scope="row">@Html.DisplayFor(m => combo.name)</th>
             <td>
-                <img 
-                     src=@Model._actionDB.GetChampionImageURL(combo.championKey) 
-                     alt="~/images/imageError.jpg" width="60" height="60"/>
+                <img src=@Model._actionDB.GetChampionImageURL(combo.championKey)
+                     alt="~/images/imageError.jpg" width="60" height="60" />
             </td>
-            <td>
+            <td>@Html.DisplayFor(m => combo.championKey)</td>
+            <td valign="middle">
                 <div id="grid">
                     @foreach (LoL1Shot.Models.Action action in combo.actions)
-                    { 
+                    {
                         string Url;
                         if (action is AutoAttack) Url = Model._actionDB.GetAutoAttackImageURL;
-                            else Url = Model._actionDB.GetSpellImageURL(combo.championKey, (action as Spell).SpellKey);
+                        else Url = Model._actionDB.GetSpellImageURL(combo.championKey, (action as Spell).SpellKey);
 
-                    <div id="actionImage"
-                         style="background-image:
+                        <div id="actionImage"
+                             style="background-image:
                             url(@Url);"
-                        );">
-                    </div>
+                             );">
+                        </div>
                     }
                 </div>
             </td>
-            <td>@Html.DisplayFor(m => combo.id)</td>
             <td>@Html.DisplayFor(m => combo.actionsString)</td>
-            <td>@Html.DisplayFor(m => combo.championKey)</td>
-
-
             <td>
                 <a asp-page="/CRUD_Combo/Update" asp-route-id=@combo.id>Edytuj</a> |
                 <a asp-page="/CRUD_Combo/Delete" asp-route-id=@combo.id>Kasuj</a>

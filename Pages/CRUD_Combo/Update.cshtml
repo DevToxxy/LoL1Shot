@@ -26,17 +26,19 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="combo.championKey" class="control-label col-sm-2"></label>
-            <div class="col-sm-6">
-                <input asp-for="combo.championKey" class="form-control">
-                <span asp-validation-for="combo.championKey"></span>
-
-            </div>
+            <label asp-for="combo.championKey">Champion</label>
+            <select asp-for="combo.championKey">
+                @foreach (var c in Model.championList)
+                {
+                    <option value=@c.KeyName>@c.KeyName</option>
+                }
+            </select>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button class="btn btn btn-primary">Zatwierdź</button>
             </div>
         </div>
+        @Html.Hidden("combo.id", Model.id)
     </form>
 </div>
