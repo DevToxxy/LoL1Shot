@@ -13,6 +13,9 @@ namespace LoL1Shot.Data_Access_Layer
         private IConfiguration _configuration;
         private RiotApi _riotApi;
         private string _latestVersion;
+        private readonly string _autoAttackImageURL = "images/autoAttackIcon.png";
+        private readonly string _missingImageURL = "images/missingImage.jpg";
+
 
         private Champion ConvertFromDataDragon(
             RiotSharp.Endpoints.StaticDataEndpoint.Champion.ChampionStatic championStatic)
@@ -91,6 +94,10 @@ namespace LoL1Shot.Data_Access_Layer
                 return keyValuePairs;
             }
         }
+
+        public string GetMissingImageURL => _missingImageURL;
+
+        public string GetAutoAttackImageURL => _autoAttackImageURL;
 
         public ActionApiDB(IConfiguration configuration)
         {
@@ -175,7 +182,7 @@ namespace LoL1Shot.Data_Access_Layer
             try
             {
                 string imageName = _riotApi.StaticData.Champions.GetByKeyAsync(
-                GetChampionKeyByName(championKeyName), _latestVersion).Result.Spells[index].Image.Full;
+                championKeyName, _latestVersion).Result.Spells[index].Image.Full;
 
                 url = _configuration.GetSpellImagesURL() + imageName;
 
@@ -204,13 +211,13 @@ namespace LoL1Shot.Data_Access_Layer
 
         public string GetChampionImageURL(string championKeyName)
         {
-            string url;
+            string url = "";
             bool exist = false;
 
             try
             {
                 string imageName = _riotApi.StaticData.Champions.GetByKeyAsync(
-                GetChampionKeyByName(championKeyName), _latestVersion).Result.Image.Full;
+                    championKeyName, _latestVersion).Result.Image.Full;
 
                 url = _configuration.GetChampionImagesURL() + imageName;
 
@@ -225,6 +232,10 @@ namespace LoL1Shot.Data_Access_Layer
             {
                 throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
                     " lub odwołanie do nieistniejącej strony URL):" + e.Message);
+            }
+            catch
+            {
+
             }
 
             if (exist)

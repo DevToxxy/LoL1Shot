@@ -28,5 +28,10 @@ namespace LoL1Shot.Pages.CRUD_Combo
 
             return RedirectToPage("/Index");
         }
+
+        public IActionResult OnPostReject()
+        {
+            return RedirectToPage("/Index");
+        }
     }
 }

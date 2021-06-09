@@ -15,7 +15,7 @@ namespace LoL1Shot.Models.CustomExtensions
 
         public static string GetChampionImagesURL(this IConfiguration configuration)
         {
-            return configuration.GetSection("DataDragonURLs").GetSection("ChampionTiles").Value;
+            return configuration.GetSection("DataDragonURLs").GetSection("ChampionImages").Value;
         }
 
         public static string GetChampionSplashesURL(this IConfiguration configuration)
