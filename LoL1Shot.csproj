@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\css\StyleSheet.css" />
-    <None Include="wwwroot\images\background.jpg" />
   </ItemGroup>
 
   <ItemGroup>
