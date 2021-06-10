@@ -1,0 +1,21 @@
+﻿body {
+    margin:0;
+    padding:0;
+}
+
+.bground {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.text {
+    height: 200px;
+    width: 2000px;
+    background: url(../images/league.gif);
+    background-size: 800px 407px;
+    text-align: center;
+    font-size: 150px;
+    font-family:Impact;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip:text;
+}
