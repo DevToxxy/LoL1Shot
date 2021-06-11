@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE[dbo].[sp_ComboAdd]
-    @name NCHAR (50),
-    @actionList NCHAR (100),
+    @name NVARCHAR (50),
+    @actionList NVARCHAR (100),
     @championKey NVARCHAR (450),
     @comboID int OUTPUT
 AS 

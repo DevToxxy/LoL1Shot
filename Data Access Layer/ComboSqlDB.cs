@@ -56,8 +56,8 @@ namespace LoL1Shot.Data_Access_Layer
             SqlCommand cmd = new SqlCommand("sp_ComboAdd", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@name", SqlDbType.NChar).Value = _Combo.name;
-            cmd.Parameters.Add("@actionList", SqlDbType.NChar).Value = _Combo.actionsString;
+            cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = _Combo.name;
+            cmd.Parameters.Add("@actionList", SqlDbType.NVarChar).Value = _Combo.actionsString;
             cmd.Parameters.Add("@championKey", SqlDbType.NVarChar).Value = _Combo.championKey;
 
             SqlParameter ComboID_SqlParam = new SqlParameter("@comboID", SqlDbType.Int);
@@ -118,8 +118,8 @@ namespace LoL1Shot.Data_Access_Layer
             SqlCommand cmd = new SqlCommand("sp_ComboUpdate", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@name", SqlDbType.NChar, 50).Value = _Combo.name;
-            cmd.Parameters.Add("@actionList", SqlDbType.NChar, 100).Value = _Combo.actionsString;
+            cmd.Parameters.Add("@name", SqlDbType.NVarChar, 50).Value = _Combo.name;
+            cmd.Parameters.Add("@actionList", SqlDbType.NVarChar, 100).Value = _Combo.actionsString;
             cmd.Parameters.Add("@championKey", SqlDbType.NVarChar, 450).Value = _Combo.championKey;
             cmd.Parameters.Add("@comboID", SqlDbType.Int).Value = _Combo.id;
 

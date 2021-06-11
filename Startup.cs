@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using LoL1Shot.Data_Access_Layer;
 using Microsoft.EntityFrameworkCore;
 using LoL1Shot.Data;
+using LoL1Shot.Infrastructure;
 
 namespace Projekt.NET
 {
@@ -62,6 +63,8 @@ namespace Projekt.NET
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //TODO fix middleware
+            //app.UseImageMiddleware();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
