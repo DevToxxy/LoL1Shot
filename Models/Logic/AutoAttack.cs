@@ -17,5 +17,6 @@ namespace LoL1Shot.Models
 
         public double AttackDamage { get; }
         public double AttackDamagePerLevel { get; }
+        public override double GetDamage => AttackDamage;
     }
 }

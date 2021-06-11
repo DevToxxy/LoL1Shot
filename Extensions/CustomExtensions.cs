@@ -23,4 +23,18 @@ namespace LoL1Shot.Models.CustomExtensions
             return configuration.GetSection("DataDragonURLs").GetSection("ChampionSplash").Value;
         }
     }
+
+    public static class ActionListExtensions
+    {
+        public static double GetFullDamage(this List<Action> actions)
+        {
+            double fullDamage = 0;
+            foreach (Action action in actions)
+            {
+                fullDamage += action.GetDamage;
+            }
+            return fullDamage;
+        }
+    } 
+        
 }

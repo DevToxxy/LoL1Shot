@@ -16,6 +16,9 @@ namespace LoL1Shot.Data_Access_Layer
         private readonly string _autoAttackImageURL = "images/autoAttackIcon.png";
         private readonly string _missingImageURL = "images/missingImage.jpg";
 
+        public string GetMissingImageURL => _missingImageURL;
+
+        public string GetAutoAttackImageURL => _autoAttackImageURL;
 
         private Champion ConvertFromDataDragon(
             RiotSharp.Endpoints.StaticDataEndpoint.Champion.ChampionStatic championStatic)
@@ -49,10 +52,13 @@ namespace LoL1Shot.Data_Access_Layer
 
                 string[] values = championStatic.Spells[i].EffectBurns[1].Split('/');
 
+                double damage = double.Parse(values[values.Length - 1]) > 0 
+                    ? double.Parse(values[values.Length - 1]) : 0 ;
+
                 spells[i] = new Spell(
                     championStatic.Spells[i].Name,
                     spellKey,
-                    double.Parse(values[values.Length-1])
+                    damage
                     );
             }
 
@@ -122,38 +128,11 @@ namespace LoL1Shot.Data_Access_Layer
             }
         }
 
-        public string GetMissingImageURL => _missingImageURL;
-
-        public string GetAutoAttackImageURL => _autoAttackImageURL;
-
         public ActionApiDB(IConfiguration configuration)
         {
             _configuration = configuration;
             _riotApi = RiotApi.GetDevelopmentInstance(configuration.GetValue<string>("RiotAPIKey"));
             _latestVersion = _riotApi.StaticData.Versions.GetAllAsync().Result[0];
-        }
-
-        /// <summary>
-        /// Zwraca klucz championa o danej nazwie (klucz, nie numer id)
-        /// </summary>
-        /// <param name="name">Imię championa</param>
-        /// <returns>Klucz championa lub null jeżeli imię championa nie występuje w bazie</returns>
-        public string GetChampionKeyByName(string name)
-        {
-            try
-            {
-                foreach (var champion in _riotApi.StaticData.Champions.GetAllAsync(_latestVersion).Result.Champions)
-                {
-                    if (champion.Value.Name == name) return champion.Value.Key;
-                }
-            }
-            catch (RiotSharpException)
-            {
-                throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
-                    " lub odwołanie do nieistniejącej strony URL)");
-            }
-
-            return null;
         }
 
         public Champion GetChampionByName(string name)
@@ -182,6 +161,74 @@ namespace LoL1Shot.Data_Access_Layer
                 throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
                     " lub odwołanie do nieistniejącej strony URL)");
             }
+        }
+
+        public List<Models.Action> GetActions(string championKey, string actionString)
+        {
+            var championStatic = _riotApi.StaticData.Champions.GetByKeyAsync(
+                championKey, _latestVersion).Result;
+
+            List<Models.Action> actions = new List<Models.Action>();
+
+
+            string[] actionStrings = actionString.Split(',');
+
+            for (int i = 0; i < actionStrings.Length; i++)
+            {
+                int spellIndex = -1;
+                SpellKey spellKey = SpellKey.Q;
+                switch (actionStrings[i])
+                {
+                    case "A":
+                        spellIndex = -1;
+                        break;
+                    case "Q":
+                        spellIndex = 0;
+                        spellKey = SpellKey.Q;
+                        break;
+                    case "W":
+                        spellIndex = 1;
+                        spellKey = SpellKey.W;
+                        break;
+                    case "E":
+                        spellIndex = 2;
+                        spellKey = SpellKey.E;
+                        break;
+                    case "R":
+                        spellIndex = 3;
+                        spellKey = SpellKey.R;
+                        break;
+                    default:
+                        throw new ArgumentException("ActionString zawiera niedozwolone znaki");
+                }
+
+                if(spellIndex >= 0) //akcja jest zaklęciem
+                {
+                    string[] values = championStatic.Spells[spellIndex].EffectBurns[1].Split('/');
+
+                    double damage = double.Parse(values[values.Length - 1]) > 0
+                        ? double.Parse(values[values.Length - 1]) : 0;
+
+                    actions.Add(
+                        new Spell(
+                            championStatic.Spells[spellIndex].Name,
+                            spellKey,
+                            damage
+                            )
+                        );
+                }
+                else //akcja jest auto atakiem
+                {
+                    actions.Add(
+                        new AutoAttack(
+                            championStatic.Stats.AttackDamage,
+                            championStatic.Stats.AttackDamagePerLevel
+                            )
+                        );
+                }
+            }
+
+            return actions;
         }
 
         public string GetSpellImageURL(string championKeyName, SpellKey spellKey)
@@ -297,6 +344,68 @@ namespace LoL1Shot.Data_Access_Layer
                 return url;
             else
                 return null;
+        }
+
+        /// <summary>
+        /// Zwraca klucz championa o danej nazwie (klucz, nie numer id)
+        /// </summary>
+        /// <param name="name">Imię championa</param>
+        /// <returns>Klucz championa lub null jeżeli imię championa nie występuje w bazie</returns>
+        public string GetChampionKeyByName(string name)
+        {
+            try
+            {
+                foreach (var champion in _riotApi.StaticData.Champions.GetAllAsync(_latestVersion).Result.Champions)
+                {
+                    if (champion.Value.Name == name) return champion.Value.Key;
+                }
+            }
+            catch (RiotSharpException)
+            {
+                throw new Exception("Odmowa dostępu do danych API (powodem może być błędny parametr" +
+                    " lub odwołanie do nieistniejącej strony URL)");
+            }
+
+            return null;
+        }
+
+        public List<Models.Action> ConverActionStringToList(string championKey, string actionString)
+        {
+            List<Models.Action> actions = new List<Models.Action>();
+            Champion champion = GetChampionByKey(championKey);
+
+            string[] actionStrings = actionString.Split(',');
+            for (int i = 0; i < actionStrings.Length; i++)
+            {
+                actionStrings[i] = actionStrings[i].Replace(" ", "");
+
+                Models.Action actionObject;
+
+                if (actionStrings[i] == "A")
+                    actionObject = new AutoAttack();
+                else
+                    switch (actionStrings[i])
+                    {
+                        case "Q":
+                            actionObject = champion.Q;
+                            break;
+                        case "W":
+                            actionObject = champion.W;
+                            break;
+                        case "E":
+                            actionObject = champion.E;
+                            break;
+                        case "R":
+                            actionObject = champion.R;
+                            break;
+                        default:
+                            throw new Exception("Nieprawidłowy symbol w actionString");
+                    }
+
+                actions.Add(actionObject);
+            }
+
+            return actions;
         }
     }
 }

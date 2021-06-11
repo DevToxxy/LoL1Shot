@@ -26,5 +26,7 @@ namespace LoL1Shot.Models
         }
 
         public Spell() : base() { }
+
+        public override double GetDamage => Damage;
     }
 }

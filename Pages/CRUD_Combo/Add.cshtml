@@ -32,7 +32,7 @@
         <div>
             <label asp-for="newCombo.championKey">Champion</label>
             <select asp-for="newCombo.championKey">
-                @foreach (var c in Model.championList)
+                @foreach (var c in Model.champions)
                 {
                     <option value=@c.KeyName>@c.KeyName</option>
                 }
