@@ -58,5 +58,16 @@ namespace LoL1Shot.Models
         [NotMapped] public Spell E { get; }
         [NotMapped] public Spell R { get; }
         [NotMapped] public AutoAttack AA { get; }
+
+        public bool IsKilled(double fullDamage)
+        {
+            return fullDamage > Armor ? true : false;
+        }
+
+        public double ArmorAfterAttack(double damage)
+        {
+            if (damage < 0) throw new ArgumentOutOfRangeException("Obrażenia nie mogą być ujemne");
+            return (damage > Armor) ? 0 : Armor - damage;
+        }
     }
 }

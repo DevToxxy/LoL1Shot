@@ -33,10 +33,5 @@ namespace LoL1Shot.Pages.Main
         {
             defenders = _actionDB.GetChampions;
         }
-
-        private bool IsOneShot(Combo combo, Champion defender)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
