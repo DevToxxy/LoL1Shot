@@ -62,9 +62,7 @@ namespace LoL1Shot.Pages.CRUD_Combo
             }
 
             combo.SetKilledByComboKeys(killedByCombo);
-            
             _comboDB.Update(combo);
-
             return RedirectToPage("/Index");
         }
     }

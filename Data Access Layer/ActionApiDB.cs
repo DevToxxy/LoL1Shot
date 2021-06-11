@@ -177,7 +177,6 @@ namespace LoL1Shot.Data_Access_Layer
             {
                 int spellIndex = -1;
                 SpellKey spellKey = SpellKey.Q;
-                ONERROR:
                 switch (actionStrings[i])
                 {
                     case "A":
@@ -200,12 +199,10 @@ namespace LoL1Shot.Data_Access_Layer
                         spellKey = SpellKey.R;
                         break;
                     default:
-                        actionStrings[i] = ;
-                        goto ONERROR;
                         throw new ArgumentException("ActionString zawiera niedozwolone znaki");
                 }
 
-                if(spellIndex > 0) //akcja jest zaklęciem
+                if(spellIndex >= 0) //akcja jest zaklęciem
                 {
                     string[] values = championStatic.Spells[spellIndex].EffectBurns[1].Split('/');
 

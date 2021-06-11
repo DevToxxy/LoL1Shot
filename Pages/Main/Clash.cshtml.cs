@@ -15,23 +15,28 @@ namespace LoL1Shot.Pages.Main
     public class ClashModel : PageModel
     {
         [BindProperty]
-        public Champion damageDealer { get; set; }
+        public Combo Combo { get; set; }
 
-        public List<Champion> defenders { get; set; }
-
-        private readonly IActionDB _actionDB;
+        public readonly IActionDB _actionDB;
+        public readonly IComboDB _comboDB;
         public readonly IConfiguration _configuration;
-        public string image;
+        public string[] killedByComboKeys;
 
-        public ClashModel(IConfiguration configuration, IActionDB actionDB)
+        public ClashModel(IConfiguration configuration, IActionDB actionDB, IComboDB comboDB)
         {
             _actionDB = actionDB;
             _configuration = configuration;
+            _comboDB = comboDB;
+            killedByComboKeys = null;
         }
 
-        public void OnGet()
+        public void OnGet(int id)
         {
-            defenders = _actionDB.GetChampions;
+            Combo = _comboDB.Get(id);
+            Combo.id = id;
+            
+            if(Combo.killedByComboKeys.Split(',').Length > 0)
+                killedByComboKeys = Combo.killedByComboKeys.Split(',');
         }
     }
 }

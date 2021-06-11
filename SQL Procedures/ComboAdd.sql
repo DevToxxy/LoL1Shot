@@ -1,8 +1,10 @@
 ﻿CREATE PROCEDURE[dbo].[sp_ComboAdd]
-    @name NCHAR (50),
-    @actionList NCHAR (100),
+    @name NVARCHAR (50),
+    @actionList NVARCHAR (100),
     @championKey NVARCHAR (450),
+	@killedByComboKeys NVARCHAR (1000),
     @comboID int OUTPUT
 AS 
-    INSERT INTO [dbo].[Combo](Name,ActionList,ChampionKey) VALUES (@name,@actionList,@championKey)
+    INSERT INTO [dbo].[Combo](Name,ActionList,ChampionKey,killedByComboKeys)
+	VALUES (@name,@actionList,@championKey,@killedByComboKeys)
     SET @comboID = @@IDENTITY

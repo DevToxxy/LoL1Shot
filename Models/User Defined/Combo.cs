@@ -46,29 +46,13 @@ namespace LoL1Shot.Models
 
         public Combo() { }
 
-        public Combo(int id, string name, string actionsString, string championKey)
+        public Combo(int id, string name, string actionsString, string championKey, string killedByComboKeys)
         {
             this.id = id;
             this.name = name;
             this.actionsString = actionsString;
             this.championKey = championKey;
-            //this.killedByCombo = null;
-            //actions = null; ConverActionStringToList(actionsString);
-        }
-
-        public Combo(
-            int id,
-            string name,
-            string actionsString,
-            string championKey,
-            List<Champion> killedByCombo)
-        {
-            this.id = id;
-            this.name = name;
-            this.actionsString = actionsString;
-            this.championKey = championKey;
-            //this.killedByCombo = killedByCombo;
-            //actions = null; ConverActionStringToList(actionsString);
+            this.killedByComboKeys = killedByComboKeys;
         }
 
         public void SetKilledByComboKeys(List<Champion> champions)

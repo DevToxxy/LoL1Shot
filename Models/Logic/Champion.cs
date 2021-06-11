@@ -61,7 +61,7 @@ namespace LoL1Shot.Models
 
         public bool IsKilled(double fullDamage)
         {
-            return fullDamage > Armor ? true : false;
+            return fullDamage > (Armor + HP) ? true : false;
         }
 
         public double ArmorAfterAttack(double damage)

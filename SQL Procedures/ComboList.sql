@@ -1,3 +1,3 @@
 ﻿CREATE PROCEDURE [dbo].[sp_ComboList]
 AS
-    SELECT Name,ActionList,ChampionKey FROM Combo
+    SELECT Id,Name,ActionList,ChampionKey, killedByComboKeys FROM Combo
