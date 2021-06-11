@@ -30,6 +30,9 @@ namespace LoL1Shot.Models
         [BindProperty]
         [Display(Name = "Lista akcji - string")]
         [Required(ErrorMessage = "Pole 'Lista akcji - string' jest obowiązkowe")]
+        //nie dziala, a nawet jakby dzialalo to przepuszcza wiecej niz 8 liter
+        //[RegularExpression(@"^(?!.*?([QWERA])*?\1)[QWERA](?:,[QWERA])*$", ErrorMessage = "Tylko: Q,W,E,R,A. Separacja przecinkami. MAX 8 akcji.")]
+
         public string actionsString { get; set; }
 
         [BindProperty]

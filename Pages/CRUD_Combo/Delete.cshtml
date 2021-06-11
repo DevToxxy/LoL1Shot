@@ -7,13 +7,17 @@
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<link rel="stylesheet" href="~/css/buttonAnimated.css" />
+
 <h2>Na pewno chcesz usunąć Combo?</h2>
 <div class="container">
     <form class="form-horizontal" method="post">
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn btn-primary">Tak</button>
-                <button asp-page-handler="Reject" class="btn btn btn-primary">Nie</button>
+                <div class="content">
+                    <button class="btn">Tak</button>
+                    <button asp-page-handler="Reject" class="btn">Nie</button>
+                </div>
             </div>
         </div>
     </form>

@@ -7,6 +7,8 @@
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<link rel="stylesheet" href="~/css/buttonAnimated.css" />
+
 <h1>Edycja combo</h1>
 <div class="container">
     <form class="form-horizontal" method="post">
@@ -36,7 +38,9 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn btn-primary">Zatwierdź</button>
+                <div class="content">
+                    <button class="btn">Zatwierdź</button>
+                </div>
             </div>
         </div>
         @Html.Hidden("combo.id", Model.id)
