@@ -52,7 +52,7 @@ namespace LoL1Shot.Data_Access_Layer
 
                 string[] values = championStatic.Spells[i].EffectBurns[1].Split('/');
 
-                double damage = double.Parse(values[values.Length - 1]) > 0 
+                double damage = double.Parse(values[values.Length - 1]) > 0
                     ? double.Parse(values[values.Length - 1]) : 0 ;
 
                 spells[i] = new Spell(
