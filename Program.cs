@@ -34,8 +34,15 @@ namespace Projekt.NET
                     var context = services.GetRequiredService<DataContext>();
                     context.Database.EnsureCreated();
 
-                    //var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
-                    //databaseCreator.CreateTables();
+                    try
+                    {
+                        var databaseCreator = context.GetService<IRelationalDatabaseCreator>();
+                        databaseCreator.CreateTables();
+                    }
+                    catch
+                    {
+
+                    }
 
                     List<Champion> champions = services.GetRequiredService<IActionDB>().GetChampions;
 
