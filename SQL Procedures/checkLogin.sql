@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[sp_checkLogin]
-    @username NCHAR (50),
-    @password NCHAR (100) OUTPUT
+    @username NVARCHAR (50),
+    @password NVARCHAR (100) OUTPUT
 AS
     SET @password = (SELECT Password
                     FROM [dbo].[User]

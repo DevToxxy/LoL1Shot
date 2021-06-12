@@ -36,11 +36,11 @@ namespace LoL1Shot.Pages.Login
 
             if (user.userName == null) user.userName = "";
 
-            cmd.Parameters.Add("@username", SqlDbType.NChar, 50).Value = user.userName;
+            cmd.Parameters.Add("@username", SqlDbType.NVarChar, 50).Value = user.userName;
 
             if (user.password == null) user.password = "";
 
-            SqlParameter hashedpassword = new SqlParameter("@password", SqlDbType.NChar, 100);
+            SqlParameter hashedpassword = new SqlParameter("@password", SqlDbType.NVarChar, 100);
             hashedpassword.Direction = ParameterDirection.Output;
             cmd.Parameters.Add(hashedpassword);
 
