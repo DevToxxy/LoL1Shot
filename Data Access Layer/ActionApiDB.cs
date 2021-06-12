@@ -217,8 +217,19 @@ namespace LoL1Shot.Data_Access_Layer
                 {
                     string[] values = championStatic.Spells[spellIndex].EffectBurns[1].Split('/');
 
-                    double damage = double.Parse(values[values.Length - 1]) > 0
-                        ? double.Parse(values[values.Length - 1]) : 0;
+                    double damage = 0;
+
+                    try
+                    {
+                        if (double.Parse(values[values.Length - 1]) > 0)
+                        {
+                            damage = double.Parse(values[values.Length - 1]);
+                        }
+                    }
+                    catch
+                    {
+                        //totalnie poprawna obsługa wyjątków
+                    }
 
                     actions.Add(
                         new Spell(

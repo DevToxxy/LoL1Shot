@@ -50,36 +50,41 @@
     <tbody>
         @foreach (var combo in Model.comboList)
         {
-        <tr>
-            <th scope="row">@Html.DisplayFor(m => combo.name)</th>
-            <td>
-                <img src=@Model._actionDB.GetChampionImageURL(combo.championKey)
-                     alt="~/images/imageError.jpg" width="60" height="60" />
-            </td>
-            <td>@Html.DisplayFor(m => combo.championKey)</td>
-            <td valign="middle">
-                <div id="grid">
-                    @foreach (LoL1Shot.Models.Action action in Model._actionDB.GetActions(combo.championKey, combo.actionsString))
-                    {
-                        string Url;
-                        if (action is AutoAttack) Url = Model._actionDB.GetAutoAttackImageURL;
-                        else Url = Model._actionDB.GetSpellImageURL(combo.championKey, (action as Spell).SpellKey);
+            <tr>
+                <th scope="row">@Html.DisplayFor(m => combo.name)</th>
+                <td>
+                    <img src=@Model._actionDB.GetChampionImageURL(combo.championKey)
+                         alt="~/images/imageError.jpg" width="60" height="60" />
+                </td>
+                <td>@Html.DisplayFor(m => combo.championKey)</td>
+                <td valign="middle">
+                    <div id="grid">
+                        @foreach (LoL1Shot.Models.Action action in Model._actionDB.GetActions(combo.championKey, combo.actionsString))
+                        {
+                            string Url;
+                            if (action is AutoAttack) Url = Model._actionDB.GetAutoAttackImageURL;
+                            else Url = Model._actionDB.GetSpellImageURL(combo.championKey, (action as Spell).SpellKey);
 
                             <div id="actionImage"
                                  style="background-image:
                             url(@Url);"
-                             );">
-                        </div>
-                    }
-                </div>
-            </td>
-            <td>@Html.DisplayFor(m => combo.actionsString)</td>
-            <td>
-                <a asp-page="/CRUD_Combo/Update" asp-route-id=@combo.id>Edytuj</a> |
-                <a asp-page="/CRUD_Combo/Delete" asp-route-id=@combo.id>Kasuj</a>
-                <a asp-page="/Main/Clash" asp-route-id=@combo.id>1Shots</a>
-            </td>
-        </tr>
+                                 );">
+                            </div>
+                        }
+                    </div>
+                </td>
+                <td>@Html.DisplayFor(m => combo.actionsString)</td>
+                <td>
+                    <a asp-page="/CRUD_Combo/Update" asp-route-id=@combo.id>Edytuj</a> |
+                    <a asp-page="/CRUD_Combo/Delete" asp-route-id=@combo.id>Kasuj</a>
+                    <a asp-page="/Main/Clash" asp-route-id=@combo.id>1Shots</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+<footer class="dropleft text-muted">
+    <div class="container">
+        <h1> <div style="text-align:center;font-family:'sans-serif';font-weight:bold">Created by: @ViewData["Creators"]</div></h1>
+    </div>
+</footer>

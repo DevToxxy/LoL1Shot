@@ -13,7 +13,7 @@ using LoL1Shot.Data_Access_Layer;
 using Microsoft.EntityFrameworkCore;
 using LoL1Shot.Data;
 using LoL1Shot.Infrastructure;
-using net10.Utils;
+using LoL1Shot.Utils;
 
 namespace Projekt.NET
 {
@@ -28,7 +28,8 @@ namespace Projekt.NET
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        { //filtry
+        {   
+            //filtry
             //services.AddRazorPages().AddMvcOptions(options =>
             //{
             //    options.Filters.Add(new CustomPageFilter(Configuration));

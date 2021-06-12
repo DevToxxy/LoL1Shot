@@ -10,9 +10,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using LoL1Shot.Data_Access_Layer;
 using LoL1Shot.Models;
+using LoL1Shot.Utils;
 namespace Projekt.NET.Pages
 {
-    public class IndexModel : PageModel
+       [CustomFilterAttributes]
+       public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IConfiguration _configuration;
