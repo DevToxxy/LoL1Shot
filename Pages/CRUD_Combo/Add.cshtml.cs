@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using LoL1Shot.Data;
 using LoL1Shot.Models.CustomExtensions;
+using Microsoft.AspNetCore.Http;
 
 namespace LoL1Shot.Pages.CRUD_Combo
 {
@@ -35,6 +36,8 @@ namespace LoL1Shot.Pages.CRUD_Combo
         public void OnGet()
         {
             champions = _context.Champions.ToList();
+            HttpContext.Session.SetString("Test", "Cokolwiek");
+
         }
 
         public IActionResult OnPost()
@@ -43,6 +46,7 @@ namespace LoL1Shot.Pages.CRUD_Combo
             {
                 return RedirectToPage("/CRUD_Combo/Add");
             }
+            ViewData["Test"] = HttpContext.Session.GetString("Test");
 
             champions = _actionDB.GetChampions;
 

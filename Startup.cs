@@ -28,12 +28,14 @@ namespace Projekt.NET
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {   
+        {
             //filtry
             //services.AddRazorPages().AddMvcOptions(options =>
             //{
             //    options.Filters.Add(new CustomPageFilter(Configuration));
             //});
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services.AddAuthentication("CookieAuthentication")
             .AddCookie("CookieAuthentication", config =>
             {
@@ -91,6 +93,9 @@ namespace Projekt.NET
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseSession();
+
 
             app.UseEndpoints(endpoints =>
             {
