@@ -1,5 +1,6 @@
 ﻿@page
 @model LoL1Shot.Pages.CRUD_Combo.DeleteModel
+@using Microsoft.AspNetCore.Http; 
 @{
 }
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -9,7 +10,7 @@
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 <link rel="stylesheet" href="~/css/buttonAnimated.css" />
 
-<h2>Na pewno chcesz usunąć Combo?</h2>
+<h2>Na pewno chcesz usunąć combo "@HttpContext.Session.GetString("ComboName")"?</h2>
 <div class="container">
     <form class="form-horizontal" method="post">
         <div class="form-group">

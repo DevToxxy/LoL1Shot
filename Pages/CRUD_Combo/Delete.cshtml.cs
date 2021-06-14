@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LoL1Shot.Data_Access_Layer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 
 namespace LoL1Shot.Pages.CRUD_Combo
 {
@@ -13,9 +14,15 @@ namespace LoL1Shot.Pages.CRUD_Combo
         [BindProperty]
         public int id { get; set; }
         IComboDB comboDB;
+
         public DeleteModel(IComboDB _comboDB)
         {
             comboDB = _comboDB;
+        }
+
+        public void OnGet(int id)
+        {
+            HttpContext.Session.SetString("ComboName", comboDB.Get(id).name);
         }
         
         public IActionResult OnPost()
